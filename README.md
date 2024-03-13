@@ -1,0 +1,1 @@
+# DWS_Projekt_StockManager_ShowCase
