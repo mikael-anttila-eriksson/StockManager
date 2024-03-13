@@ -5,7 +5,7 @@
     /// </summary>
     public static class DatabaseConnection
     {
-        private readonly static string _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=StockManager;Integrated Security=True";
+        private readonly static string _connectionString = "Your ConnectionString";
         public static string ConnectionString
         {
             get { return _connectionString; }
