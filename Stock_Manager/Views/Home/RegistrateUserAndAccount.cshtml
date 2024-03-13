@@ -1,0 +1,50 @@
+﻿@model Stock_Manager.ViewModel.AccountsViewModel
+
+@{
+    ViewData["Title"] = "CountinueRegistration";
+
+    //Show error block
+    if (ViewBag.error != "")
+    {
+        <p>An error occured: @ViewBag.error</p>
+    }
+}
+@section Metatags
+    {
+    <meta name="DC.title" content="Set user account" />
+    <meta name="DC.description" content="Fill in information about user´s first account" />
+    <meta name="DC.identifier" content="https://localhost:7132/RegisterUserAccount" />
+}
+
+<h1>Countinue Registration</h1>
+
+<h4>Create your first account</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+            <form asp-action="RegistrateUserAndAccount">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>            
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Optional - Create a name for the account</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Saldo" class="control-label">How much money do you want to deposit to the account?</label>
+                <input asp-for="Saldo" class="form-control" placeholder="ex. 1000"/>
+                <span asp-validation-for="Saldo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,59 @@
+﻿<!-- Usings fro Cookie Authentication -->
+@using Microsoft.AspNetCore.Authentication;
+@using Microsoft.AspNetCore.Authorization;
+@using System.Security.Claims;
+<!-- --------------------------------   -->
+@model Stock_Manager.ViewModel.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login Page";
+}
+@section Metatags
+    {
+    <meta name="DC.title" content="Login" />
+    <meta name="DC.description" content="User login" />
+    <meta name="DC.identifier" content="https://localhost:7132/Account/Login" />
+}
+
+@{
+    int i = 0;
+    if (ViewBag.loginError != null)
+    {
+        <h4 class="text-danger">@ViewBag.loginError</h4>
+    }
+}
+
+<div class="container">
+    <div class="row my-5">
+
+        <div class="col-sm-2 col"></div>
+        <div class="col-sm-4">
+            <form class="form-horizontal my-3" asp-action="Login">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label">Username</label>
+                    <input asp-for="Email" class="form-control" autocomplete="off" type="text" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label">Password</label>
+                    <input asp-for="Password" class="form-control" type="password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Login" />
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>
+@{
+    if(ViewBag.check != null)
+    {
+        <script>
+            alert(@ViewBag.check)
+        
+        </script>
+    }
+}

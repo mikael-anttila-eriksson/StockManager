@@ -1,0 +1,74 @@
+﻿@model Stock_Manager.ViewModel.RegisterViewModel
+
+@{
+    ViewData["Title"] = "RegisterUser";
+
+    //Show error block
+    if (ViewBag.error != "")
+    {
+        <p class="text-danger">An error occured: @ViewBag.error</p>
+    }
+    if(ViewBag.tokenError != null)
+    {
+        <h3 class="text-danger">@ViewBag.tokenError</h3>
+    }
+    if(ViewBag.userExist != null)
+    {
+        <h4 class="text-danger">@ViewBag.userExist</h4>
+    }
+}
+@section Metatags
+    {
+    <meta name="DC.title" content="Registrate new user" />
+    <meta name="DC.description" content="Fill in information for new user" />
+    <meta name="DC.identifier" content="https://localhost:7132/RegisterUser" />
+}
+
+<h1>Register new account</h1>
+
+<h4>Fill in user details</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="RegisterUser">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>  
+            
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" autocomplete="off"/>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword" class="control-label"></label>
+                <input asp-for="ConfirmPassword" class="form-control" autocomplete="off"/>
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

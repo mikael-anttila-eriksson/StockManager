@@ -1,0 +1,111 @@
+﻿@model Stock_Manager.ViewModel.StockViewModel
+
+@{
+    ViewData["Title"] = "StockDetail";
+}
+@section Metatags
+    {
+    <meta name="DC.title" content="Stock information" />
+    <meta name="DC.description" content="Show stock candlestick chart"/>
+    <meta name="DC.description" content="Show informaion about specific stock" />
+    <meta name="DC.identifier" content="https://localhost:7132/Stock/StockDetail" />
+}
+
+<h1>StockDetail</h1>
+<div class="container-fluid">
+    <div class="row">
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <h1 class="h5">Stockholm exchange</h1>
+            </div>            
+            <h3>@Model.Name</h3>
+
+            <!-- <canvas class="my-4" id="chartContainer" width="900" height="380"></canvas> -->
+            <div id="chartContainer" style="height: 450px; width: 100%;"></div> 
+
+            <div class="table-responsive">
+                <table class="table table-hover table-striped table-sm">
+                    <tr>
+                        <th>Name</th>
+                        <th>Current price</th>
+
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td class="col-10">
+                            @Html.DisplayFor(model => model.Name)
+                        </td>
+                        <td class="col-10">
+                            @Html.DisplayFor(model => model.Price)
+                        </td>
+                    </tr>
+                                       
+                </table>
+            </div>
+        </main>
+    </div>
+</div>
+<div>
+    <a asp-action="ShowAllStocks">Back to List</a>
+</div>
+<!-- All scripts at the end  for faster render of page, ... typ -->
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.stock.min.js"></script>
+<script type="text/javascript">
+    window.onload = function () {
+        var dataPoints = [], dataVolume = [];
+        var stockChart = new CanvasJS.StockChart("chartContainer", {
+            theme: "light2",
+            charts: [{
+                title: {
+                    text: "Bitcoin Price in USD"
+                },
+                axisY: {
+                    prefix: "$",
+                    title: "Prices"
+                },
+                axisX: {
+                    interval: 1,
+                    intervalType: "month",
+                    valueFormatString: "DD MMM",
+                    labelAngle: -45
+                },
+                data: [{
+                    type: "candlestick",
+                    yValueFormatString: "$#,###.##",
+                    dataPoints: dataPoints
+                    //dataPoints: [ //y: [Open, High ,Low, Close]                    
+                }]
+            },
+            {
+                title: {
+                    text: "Volmue"
+                },
+                axisY: {
+                    minimum: 0
+                },
+                data: [{
+                    dataPoints: dataVolume
+                }]
+            }],
+
+            navigator: {
+                slider: {
+                    minimum: new Date(@ViewBag.minDate),
+                    maximum: new Date(@ViewBag.maxDate)
+                }
+            }
+        });
+        //stockChart.render(); // moved to getJSON
+        $.getJSON("https://localhost:7132/Stock/myjson", { ticker: @Html.Raw(ViewBag.name) }, function (data) {
+            for (var i = 0; i < data.length; i++) {                
+                // Use DataMember Names!!!
+                dataPoints.push({ x: new Date(data[i].X), y: [(data[i].Open), (data[i].High), (data[i].Low), (data[i].Close)] });
+                dataVolume.push({ x: new Date(data[i].X), y: data[i].Volume });
+            }
+            stockChart.render();
+        });
+    }
+</script>
+

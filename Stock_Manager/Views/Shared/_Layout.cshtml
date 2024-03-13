@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Brukar finnas med, de följer inte Dublin Core skulle jag tro -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Lägg generella meta här -->
+    <meta name="DC.title" content="My Stock Manager" />
+    <meta name="DC.creator" content="Mikael AE" />
+    <meta name="DC.subject" content="Stock Manager" />
+    <meta name="DC.language" content="en" />
+    <meta name="DC.description" content="Place to overview your stocks" />
+    <meta name="DC.description" content="See stock price"/>
+    <meta name="DC.description" content="Buy/sell stocks" />
+    <meta name="DC.date" content="Update. 2023-10-27" />
+    <meta name="DC.format" content="text/html" />
+    <meta name="DC.rights" content="Educational use permitted" />
+    <!--Lägg Specifika meta här-->
+    @await RenderSectionAsync("Metatags", required: false)
+
+    <title>@ViewData["Title"] - Stock Manager</title>
+    
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Stock_Manager.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="container-fluid">
+        <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="TodayOverView">Market Today</a>
+            <ul class="navbar-nav px-3">
+                @if(User.Identity.IsAuthenticated)
+                {
+                    // logged in
+                    <li class="nav-item text-nowrap">
+                        <a class="nav-link" asp-area="" asp-controller="Account" asp-action="SignOut">Sign out</a>
+                    </li>
+                }
+                else
+                {
+                    // not logged in
+                    <li class="nav-item text-nowrap">
+                        <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">Sign in</a>
+                    </li>
+                }
+                }
+                
+            </ul>
+        </nav>
+     </header>
+     <div class="row container-fluid">
+        <nav class="col-md-2 border-start-0 d-none d-md-block bg-light sidebar px-4">
+            <div class="sidebar-sticky">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1 fs-5">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="TodayOverview">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        
+                        <li><a class="nav-link" asp-area="" asp-controller="Stock" asp-action="ShowAllStocks">Market</a></li>
+                        <li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="RegisterUser">Register</a></li>  
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li><a class="nav-link" asp-area="" asp-controller="MyEconomy" asp-action="Overview">My economy</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container col-md-9">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+     </div>
+        
+    
+    
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - Stock_Manager - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

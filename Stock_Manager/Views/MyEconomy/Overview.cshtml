@@ -1,0 +1,110 @@
+﻿@model Stock_Manager.ViewModel.UserAccountsViewModel
+
+@{
+    ViewData["Title"] = "Overview";
+
+    //Show error block
+    if(ViewBag.error != null)
+    {
+        <h5 class="text-danger">An error occured1: @ViewBag.error</h5>
+    }
+    if(true && true || true)
+    {
+
+    }
+    if ((@TempData["error"] != null) && ((string)@TempData["error"] != ""))
+    {
+        <h5 class="text-danger">An error occured2: @TempData["error"]</h5>
+    }
+}
+@section Metatags
+    {
+    <meta name="DC.title" content="My economy" />
+    <meta name="DC.description" content="See information about users accounts" />
+    <meta name="DC.identifier" content="https://localhost:7132/MyEconomy/Overview" />
+    <!-- From Bootsrap Example Dashboard-->   
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/dashboard/">
+    <!-- Bootstrap core CSS -->
+    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="dashboard.css" rel="stylesheet">
+}
+
+<h1>Overview</h1>
+
+<p>
+        <a asp-controller="Account" asp-action="AddAccount">+ Create New Account</a>
+</p>
+
+
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                    <h1 class="h2">My Economy</h1>
+                </div>
+                <!-- Tabs-->
+                <div class="my-2">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item mx-3">
+                            <a class="nav-link active" asp-controller="MyEconomy" asp-action="Overview">Overview</a>
+                        </li>
+                        <li class="nav-item mx-3">
+                            <a class="nav-link active" asp-controller="Account" asp-action="TransactionsForAccount">Transactions</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Summary tabs/buttons-->
+                <div class="d-flex flex-row m-4">
+                    <div class="mx-4">
+                        <div>Total value</div>
+                        <div>@Model.TotalValue</div>
+                    </div>
+                    <div class="mx-4">
+                        <div>Saldo</div>
+                        <div>@Model.TotalSaldo</div>
+                    </div>
+                    <div class="mx-4">
+                        <div>Development %</div>
+                        <div>@Model.TotalBalance</div>
+                    </div>
+                </div>
+                
+
+                <h3>Savings</h3>
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped table-sm">
+                        <thead>
+                            <tr>
+                            <th>Account </th>
+                            <th>Total value</th>
+                            <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var item in Model.UserAccounts)
+                        {
+                            string accountName = item.Name ?? item.AccountId.ToString();
+                            <tr>
+                                <td>
+                                    @accountName
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ValueAccount)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "UpdateAccount", "Account", new { accountId = item.AccountId }) |
+                                    @Html.ActionLink("Details", "AccountView", "Account", new { accountId = item.AccountId }) |
+                                    @Html.ActionLink("Delete", "DeleteAccount", "Account",  new { accountId = item.AccountId})
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </div>

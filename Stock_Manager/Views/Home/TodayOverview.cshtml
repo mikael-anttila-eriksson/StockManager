@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@section Metatags
+{    
+    <meta name="DC.title" content="Today Overview" />
+    <meta name="DC.description" content="start page" />
+    <meta name="DC.identifier" content="https://localhost:7132/TodayOverview" />
+    
+}
+
+
+
+<div class="text-center col order-1">
+        @{
+        //Show error block
+        if (ViewBag.error != null)
+        {
+            <h5 class="text-danger">An error occured1: @ViewBag.error</h5>
+        }
+        if ((@TempData["error"] != null) && ((string)@TempData["error"] != ""))
+        {
+            <h5 class="text-danger">An error occured2: @TempData["error"]</h5>
+        }
+    }
+    <h1 class="display-4">Stock market today</h1>
+    <p>OMX Stockholm 30</p>
+</div>
+<p>@GetMe()</p>
+
+@{// verkar gå att skapa metoder här
+    string GetMe()
+    {
+        return "method in a View";
+    }
+}

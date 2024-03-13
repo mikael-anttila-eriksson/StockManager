@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Stock_Manager.ViewModel.StockViewModel>
+
+@{
+    ViewData["Title"] = "ShowAllStocks";
+
+    //Show error block
+    if (ViewBag.error != "")
+    {
+        <p>An error occured: @ViewBag.error</p>
+    }
+}
+@section Metatags
+    {
+    <meta name="DC.title" content="Show all stocks" />
+    <meta name="DC.description" content="Show all available stocks" />
+    <meta name="DC.identifier" content="https://localhost:7132/Stock/ShowAllStocks" />
+}
+
+<h1>Stockholm market</h1>
+<h3>Large Cap</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TickerSymbol)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TickerSymbol)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "StockDetail", new { ticker = item.TickerSymbol })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

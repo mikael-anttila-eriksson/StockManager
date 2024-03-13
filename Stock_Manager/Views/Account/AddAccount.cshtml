@@ -1,0 +1,50 @@
+﻿@model Stock_Manager.ViewModel.AccountsViewModel
+
+@{
+    ViewData["Title"] = "AddAccount";
+    //Show error block
+    if (ViewBag.error != "")
+    {
+        <p>An error occured: @ViewBag.error</p>
+    }
+}
+@section Metatags
+    {
+    <meta name="DC.title" content="Add Account" />
+    <meta name="DC.description" content="Add new account for user" />
+    <meta name="DC.identifier" content="https://localhost:7132/Account/AddAccount" />
+}
+
+<h1>AddAccount</h1>
+
+<h4>AccountsViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddAccount">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                       
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>  
+            <div class="form-group">
+                <label asp-for="Saldo" class="control-label"></label>
+                <input asp-for="Saldo" class="form-control" placeholder="ex. 1000" />
+                <span asp-validation-for="Saldo" class="text-danger"></span>
+            </div>            
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="MyEconomy" asp-action="Overview">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

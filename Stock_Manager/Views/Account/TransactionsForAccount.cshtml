@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Stock_Manager.ViewModel.TransactionsViewModel>
+
+@{
+    ViewData["Title"] = "TransactionsForAccount";
+
+    string type = "";
+}
+@section Metatags
+    {
+    <meta name="DC.title" content="Transaction history" />
+    <meta name="DC.description" content="See transaction history for specific account" />
+    <meta name="DC.identifier" content="https://localhost:7132/Account/TransactionsForAccount" />
+}
+
+<h1>Transaction history</h1>
+
+<p>
+    For account: @ViewBag.account
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IsBuy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StockTicker)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Curtage)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>                
+            <td>
+                 @*@if(@item.IsBuy)
+                 {
+                        //@type = @item.IsBuy == true? "Buy" : "Sell";
+                        type = "Buy";
+                 }
+                 else
+                 {
+                        type = "Sell";      
+                 }*@
+                 @{
+                        type = @item.IsBuy == true ? "Buy" : "Sell";
+                 }
+                 @type
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StockTicker)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Curtage)
+            </td>           
+        </tr>
+}
+    </tbody>
+</table>

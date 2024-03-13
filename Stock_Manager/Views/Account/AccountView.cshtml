@@ -1,0 +1,105 @@
+﻿@using Stock_Manager.ModelMethods
+@model Stock_Manager.ViewModel.AccountsViewModel
+
+
+@{
+    ViewData["Title"] = "AccountView";
+
+    //Show error block
+    if (ViewBag.error != "")
+    {
+        <p>An error occured: @ViewBag.error</p>
+    }
+}
+@section Metatags
+    {
+    <meta name="DC.title" content="Account view" />
+    <meta name="DC.description" content="See information about specific account" />
+    <meta name="DC.identifier" content="https://localhost:7132/Account/AccountView" />
+}
+
+
+<h1>My Economy, </h1>
+<!-- Show name of account or account number-->
+<p>Account: @(Model.Name ?? @Model.AccountId.ToString())</p>
+
+
+
+<div class="container-fluid">
+    <div class="row">
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <h1 class="h2">My Economy</h1>
+            </div>
+
+            <div class="my-2">
+                <ul class="nav nav-pills">
+                    <li class="nav-item mx-3">
+                        <a class="nav-link active" asp-controller="MyEconomy" asp-action="Overview">Overview</a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link active" asp-controller="Account" asp-action="TransactionsForAccount">Transactions</a>
+                    </li>
+                </ul>
+
+            </div>
+            <h3>Savings</h3>
+            <div class="table-responsive">
+                <table class="table table-hover table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th>Buy</th>
+                            <th>Sell</th>
+                            <th>Assets</th>
+                            <th>Count</th>
+                            <th>+/- %</th>
+                            <th>current</th>
+                            <th>Purchase</th>
+                            <th>Market value</th>
+                            <th>Revenue $</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var item in Model.VMAccountLines){
+                            double currentPrice = StockMethods.GetLatestPrice(item.StockTicker, out _);
+                            <tr>
+                                <td>
+                                    +
+                                </td>
+                                <td>
+                                    -
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StockTicker)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity)
+                                </td>
+                                <td>
+                                    %
+                                </td>
+                                <td>
+                                    @currentPrice
+                                </td>
+                                <td>
+                                    -
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Value)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Revenue)
+                                </td>
+                                <td>                                    
+                                    @Html.ActionLink("Details", "StockDetail", "Stock", new { ticker=item.StockTicker }) 
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</div>

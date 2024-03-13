@@ -1,0 +1,58 @@
+﻿@{
+	Layout = null;
+}
+ 
+<!DOCTYPE HTML>
+<html>
+<head>
+<script>
+window.onload = function () {
+ 
+var dps = [];
+ 
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	exportEnabled: true,
+	title: {
+		text: "BMW Stock Price - October 2017"
+	},
+	axisX: {
+		valueFormatString: "DD MMM"
+	},
+	axisY: {
+		title: "Price",
+		prefix: "€"
+	},
+	data: [{
+		type: "candlestick",
+		name: "BMW Stock Price",
+		showInLegend: true,
+		xValueFormatString: "DD MMM",
+		yValueFormatString: "€##0.00",
+		xValueType: "dateTime",
+		dataPoints: dps
+	}]
+});
+ 
+function addData(data) {
+	for (var i = 0; i < data.length; i++) {
+		dps.push({
+			x: new Date(data[i].x),
+			y: data[i].y
+		});
+	}
+	chart.render();
+ 
+}
+ 
+$.getJSON("/home/json", addData);
+ 
+}
+</script>
+</head>
+<body>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>
+</body>
+</html> 
